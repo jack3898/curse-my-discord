@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    container_name: curse-my-discord
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src/assets:/usr/src/app/assets:ro
+    command: ["node", "index.js"]

@@ -3,8 +3,13 @@ import { bot } from "./bot.ts";
 import { env } from "./env.ts";
 import { chance, pick } from "./utils.ts";
 import { globSync } from "node:fs";
+import path from "node:path";
 
-const assets = globSync("src/assets/*.{png,jpg,jpeg,gif,webp,mp4,mov}");
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+const assets = globSync(
+	path.join(__dirname, "assets", "*.{png,jpg,jpeg,gif,webp,mp4,mov}"),
+);
 
 bot.login(env.DISCORD_TOKEN);
 
