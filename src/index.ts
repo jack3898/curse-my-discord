@@ -1,12 +1,10 @@
 import { AttachmentBuilder } from "discord.js";
-import { bot } from "./bot";
-import { env } from "./env";
-import { chance, pick } from "./utils";
-import { Glob } from "bun";
+import { bot } from "./bot.ts";
+import { env } from "./env.ts";
+import { chance, pick } from "./utils.ts";
+import { globSync } from "node:fs";
 
-const assets = [
-	...new Glob("src/assets/*.{png,jpg,jpeg,gif,webp,mp4,mov}").scanSync(),
-];
+const assets = globSync("src/assets/*.{png,jpg,jpeg,gif,webp,mp4,mov}");
 
 bot.login(env.DISCORD_TOKEN);
 

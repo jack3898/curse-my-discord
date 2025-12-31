@@ -3,13 +3,13 @@
 		// Environment setup & latest features
 		"lib": ["ESNext"],
 		"target": "ESNext",
-		"module": "Preserve",
+		"module": "preserve",
 		"moduleDetection": "force",
-		"jsx": "react-jsx",
 
 		// Bundler mode
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
+		"allowArbitraryExtensions": false,
 		"verbatimModuleSyntax": true,
 		"noEmit": true,
 
@@ -24,6 +24,7 @@
 		// Some stricter flags
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noPropertyAccessFromIndexSignature": true
+		"noPropertyAccessFromIndexSignature": true,
+		"erasableSyntaxOnly": true
 	}
 }
