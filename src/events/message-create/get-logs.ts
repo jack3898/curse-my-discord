@@ -16,7 +16,10 @@ export async function getLogsMessage(
 		return;
 	}
 
-	if (message.content.startsWith("!tail")) {
+	if (
+		message.content.startsWith("!tail") ||
+		message.content.startsWith("!logs")
+	) {
 		const logs = ctx.logs
 			.map((info) => logFormat(info))
 			.join("\n")

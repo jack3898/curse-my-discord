@@ -10,7 +10,12 @@ export async function tryCurseUser(
 	message: OmitPartialGroupDMChannel<Message<boolean>>,
 ) {
 	if (message.author.bot) {
-		ctx.log.verbose(`Ignoring app message from ${message.author.tag}`);
+		return;
+	}
+
+	if (!message.inGuild()) {
+		ctx.log.verbose(`Not cursing DM message from ${message.author.tag}`);
+
 		return;
 	}
 

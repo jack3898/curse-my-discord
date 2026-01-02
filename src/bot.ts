@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits } from "discord.js";
+import { Client, GatewayIntentBits, Partials } from "discord.js";
 
 export const bot = new Client({
 	intents: [
@@ -7,4 +7,5 @@ export const bot = new Client({
 		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.DirectMessages,
 	],
+	partials: [Partials.Channel], // For DM channels
 });
