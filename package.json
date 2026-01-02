@@ -7,7 +7,7 @@
 		"prestart": "pnpm build",
 		"start": "node --env-file .env dist/index.js",
 		"build": "tsup",
-		"check": "biome check && knip",
+		"check": "tsc --noEmit && biome check && knip",
 		"fix": "biome check --fix"
 	},
 	"devDependencies": {
@@ -18,7 +18,9 @@
 		"knip": "^5.78.0",
 		"tsup": "^8.5.1",
 		"tsx": "^4.21.0",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"winston": "^3.19.0",
+		"winston-transport": "^4.9.0"
 	},
 	"packageManager": "pnpm@10.27.0"
 }

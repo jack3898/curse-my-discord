@@ -1,1 +1,1 @@
-export * from "./number";
+export * as array from "./array";

@@ -9,13 +9,24 @@ export async function tryCurseUser(
 	ctx: AppContext,
 	message: OmitPartialGroupDMChannel<Message<boolean>>,
 ) {
-	if (message.author.bot || !ctx.utils.chance(ctx.env.CURSE_CHANCE)) {
+	if (message.author.bot) {
+		ctx.log.verbose(`Ignoring app message from ${message.author.tag}`);
 		return;
 	}
 
-	console.info(`Cursing user ${message.author.tag}`);
+	const roll = Math.floor(Math.random() * ctx.env.CURSE_CHANCE);
 
-	const asset = ctx.utils.pick(ctx.assets);
+	if (roll !== 0) {
+		ctx.log.verbose(
+			`Not cursing user ${message.author.tag} as they rolled ${roll}/${ctx.env.CURSE_CHANCE}`,
+		);
+
+		return;
+	}
+
+	ctx.log.info(`Cursing user ${message.author.tag}`);
+
+	const asset = ctx.utils.array.pick(ctx.assets);
 
 	if (asset) {
 		const attachment = new AttachmentBuilder(asset);

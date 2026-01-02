@@ -1,7 +1,9 @@
+import { globSync } from "node:fs";
 import path from "node:path";
+import type { Logger } from "winston";
 import { bot } from "./bot";
 import { env } from "./env";
-import { globSync } from "node:fs";
+import { type FormatSchema, getTail, logger } from "./logger";
 import * as utils from "./utils";
 
 export type AppContext = {
@@ -9,6 +11,8 @@ export type AppContext = {
 	assets: string[];
 	env: typeof env;
 	utils: typeof utils;
+	log: Logger;
+	logs: FormatSchema[];
 };
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
@@ -22,6 +26,10 @@ const context: AppContext = {
 	assets,
 	env,
 	utils,
+	log: logger,
+	get logs() {
+		return getTail(40);
+	},
 };
 
 export type EventHandler<T> = (context: AppContext, ...args: T[]) => void;
