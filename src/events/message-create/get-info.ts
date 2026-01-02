@@ -9,7 +9,7 @@ export async function getInfo(
 	ctx: AppContext,
 	message: OmitPartialGroupDMChannel<Message<boolean>>,
 ) {
-	if (ctx.env.OWNER_ID !== message.author.id) {
+	if (ctx.env.OWNER_ID !== message.author.id && !message.author.bot) {
 		ctx.log.warn(`Unauthorized info request from ${message.author.tag}`);
 
 		return;
