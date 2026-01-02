@@ -9,6 +9,12 @@ export async function getInfo(
 	ctx: AppContext,
 	message: OmitPartialGroupDMChannel<Message<boolean>>,
 ) {
+	if (ctx.env.OWNER_ID !== message.author.id) {
+		ctx.log.warn(`Unauthorized info request from ${message.author.tag}`);
+
+		return;
+	}
+
 	if (message.content.startsWith("!info")) {
 		const payload = {
 			curseChance: ctx.env.CURSE_CHANCE,

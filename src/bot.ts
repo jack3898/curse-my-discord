@@ -5,5 +5,6 @@ export const bot = new Client({
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.DirectMessages,
 	],
 });

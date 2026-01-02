@@ -10,6 +10,12 @@ export async function getLogsMessage(
 	ctx: AppContext,
 	message: OmitPartialGroupDMChannel<Message<boolean>>,
 ) {
+	if (ctx.env.OWNER_ID !== message.author.id) {
+		ctx.log.warn(`Unauthorized info request from ${message.author.tag}`);
+
+		return;
+	}
+
 	if (message.content.startsWith("!tail")) {
 		const logs = ctx.logs
 			.map((info) => logFormat(info))
