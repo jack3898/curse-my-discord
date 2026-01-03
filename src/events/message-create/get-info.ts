@@ -9,18 +9,22 @@ export async function getInfo(
 	ctx: AppContext,
 	message: OmitPartialGroupDMChannel<Message<boolean>>,
 ) {
-	if (ctx.env.OWNER_ID !== message.author.id && !message.author.bot) {
+	const { commandIs } = ctx.utils.parser;
+
+	if (!commandIs(message.content, "info") || message.author.bot) {
+		return;
+	}
+
+	if (!ctx.isOwner(message.author)) {
 		ctx.log.warn(`Unauthorized info request from ${message.author.tag}`);
 
 		return;
 	}
 
-	if (message.content.startsWith("!info")) {
-		const payload = {
-			curseChance: ctx.env.CURSE_CHANCE,
-			assetCount: ctx.assets.length,
-		};
+	const payload = {
+		curseChance: ctx.env.CURSE_CHANCE,
+		assetCount: ctx.assets.length,
+	};
 
-		await message.reply(codeBlock(JSON.stringify(payload, null, 2)));
-	}
+	await message.reply(codeBlock(JSON.stringify(payload, null, 2)));
 }

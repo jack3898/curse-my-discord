@@ -9,33 +9,32 @@ export async function tryCurseUser(
 	ctx: AppContext,
 	message: OmitPartialGroupDMChannel<Message<boolean>>,
 ) {
-	if (message.author.bot) {
+	const { pickRandom } = ctx.utils.array;
+	const { roll } = ctx.utils.number;
+
+	if (message.author.bot || !message.inGuild()) {
 		return;
 	}
 
-	if (!message.inGuild()) {
-		ctx.log.verbose(`Not cursing DM message from ${message.author.tag}`);
+	const rollResult = roll(ctx.env.CURSE_CHANCE);
 
-		return;
-	}
-
-	const roll = Math.floor(Math.random() * ctx.env.CURSE_CHANCE);
-
-	if (roll !== 0) {
+	if (rollResult !== 0) {
 		ctx.log.verbose(
-			`Not cursing user ${message.author.tag} as they rolled ${roll}/${ctx.env.CURSE_CHANCE}`,
+			`Not cursing user ${message.author.tag} as they rolled ${rollResult}/${ctx.env.CURSE_CHANCE}`,
 		);
 
 		return;
 	}
 
-	ctx.log.info(`Cursing user ${message.author.tag}`);
+	ctx.log.info(`Cursing user ${message.author.tag} as they rolled 0!`);
 
-	const asset = ctx.utils.array.pick(ctx.assets);
+	const asset = pickRandom(ctx.assets);
 
 	if (asset) {
 		const attachment = new AttachmentBuilder(asset);
 
 		await message.reply({ files: [attachment] });
+	} else {
+		await message.reply("lmao");
 	}
 }
