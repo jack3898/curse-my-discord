@@ -22,13 +22,8 @@ const FormatSchema = type({
 export type FormatSchema = typeof FormatSchema.infer;
 
 class MemoryTransport extends Transport {
-	constructor(opts?: Transport.TransportStreamOptions) {
-		super(opts);
-		this.maxLogs = Infinity;
-	}
-
 	private logs: (typeof FormatSchema.infer)[] = [];
-	private maxLogs: number;
+	private maxLogs = 100;
 
 	override log(info: winston.Logform.TransformableInfo, next: () => void) {
 		setImmediate(() => {
@@ -43,14 +38,14 @@ class MemoryTransport extends Transport {
 		});
 	}
 
-	getTail(tail: number) {
+	getTail(tail = Infinity) {
 		return this.logs.slice(-tail);
 	}
 }
 
 const memoryTransportSingleton = new MemoryTransport();
 
-export function getTail(tail: number) {
+export function getTail(tail?: number) {
 	return memoryTransportSingleton.getTail(tail);
 }
 

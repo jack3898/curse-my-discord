@@ -28,7 +28,7 @@ const context: AppContext = {
 	utils,
 	log: logger,
 	get logs() {
-		return getTail(40);
+		return getTail(100);
 	},
 };
 
